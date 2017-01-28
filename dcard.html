@@ -24,7 +24,9 @@
 		<hr>
 		<div v-for="it in fullContent" v-if="it.gender!='D' && it.gender!='M' ">
 			<!-- <a :href="'https://www.dcard.tw/_api/posts/' + it.id">{{ it.title }}</a> -->
-			<a :href="'https://www.dcard.tw/f/sex/p/' + it.id" target="_blank">{{ it.title }}</a>
+            <a :href="'https://www.dcard.tw/f/sex/p/' + it.id" target="_blank">
+                <span class="title">{{ it.title }}</span>
+            </a> <span>{{ getTimeAndSchool(it) }}</span>
 			<p>{{ it.content }}</p>
 			<div v-for="media in it.media">
 				<div v-for="url in media">

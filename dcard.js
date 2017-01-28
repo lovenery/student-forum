@@ -80,6 +80,14 @@ new Vue({
                 .then(response => {
                     res.content = response.body.content
                 })
+        },
+        getTimeAndSchool (item) {
+            let date = new Date(item.createdAt)
+            let newtime = ` ${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`
+            if (item.school) {
+                newtime += ( ' ' + item.school )
+            }
+            return newtime
         }
     }
 })
