@@ -7,7 +7,7 @@ new Vue({
         fullContent: [],
         loading: false,
         before: '', // LAST ITEM
-        popular: true
+        popular: localStorage.getItem('popular') != null ? JSON.parse(localStorage.getItem('popular')) : true,
     },
     mounted: function() {  
         window.addEventListener('scroll', this.handleScroll)

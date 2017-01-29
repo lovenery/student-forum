@@ -6,8 +6,7 @@ new Vue({
         imageOnlyFlag: false,
         page: 1,
         loading: false,
-        mode: 'hot',
-
+        mode: localStorage.getItem('mode') != null ? localStorage.getItem('mode') : 'hot',
     },
     mounted: function() {  
         window.addEventListener('scroll', this.handleScroll)
@@ -46,9 +45,11 @@ new Vue({
         switchMode () {
             if (this.mode == 'hot') {
                 this.mode = 'new'
+                localStorage.setItem('mode', 'new')
                 this.init()
             } else {
                 this.mode = 'hot'
+                localStorage.setItem('mode', 'hot')
                 this.init()
             }
         },
@@ -70,7 +71,7 @@ new Vue({
                     newHash = content.split('http://i.imgur.com/')[img_i].split('.png')[0]
                     ext = '.png'
                 }
-                let url = 'http://i.imgur.com/' + newHash + ext
+                let url = 'https://i.imgur.com/' + newHash + ext
                 content = content.split(url)[0] + "<img class='contentImg' src='" + url + "'/>" + content.split(url)[1]
                 only += "<img class='contentImg' src='" + url + "'/>"
             }
