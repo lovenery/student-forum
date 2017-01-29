@@ -71,7 +71,7 @@ new Vue({
                     newHash = content.split('http://i.imgur.com/')[img_i].split('.png')[0]
                     ext = '.png'
                 }
-                let url = 'https://i.imgur.com/' + newHash + ext
+                let url = 'http://i.imgur.com/' + newHash + ext
                 content = content.split(url)[0] + "<img class='contentImg' src='" + url + "'/>" + content.split(url)[1]
                 only += "<img class='contentImg' src='" + url + "'/>"
             }
