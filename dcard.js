@@ -1,6 +1,7 @@
 // https://www.dcard.tw/_api/forums/sex/posts?popular=true&before=225694690
 // https://www.dcard.tw/_api/posts/225699806
 // https://www.dcard.tw/_api/posts/225699806/comments
+// https://www.dcard.tw/_api/posts/225704108/comments?popular=true
 new Vue({
     el: '#app',
     data: {
@@ -62,7 +63,8 @@ new Vue({
                 .then(response => {
                     let res = response.body
                     for (var i = 0, len = res.length; i < len; i++) {
-                        // Vue.set(res[i], 'content', this.getDetail(res[i]) ) // fail QQ
+                        // res[i].content = this.getDetail(res[i])
+                        res[i].popular = this.getPopularContent(res[i])
                         this.fullContent.push(res[i])
                         if (i == len - 1) {
                             this.before = res[i].id
@@ -70,8 +72,12 @@ new Vue({
                     }
                     this.loading = false
                 }, (response) => {
-                    alert("似乎有錯誤QQ, https://dcard.tw失連.")
-                    location.reload()
+                    var r = confirm("https://dcard.tw失連。是：重新整理。否：回首頁。");
+                    if (r == true) {
+                        location.reload();
+                    } else {
+                        window.location.href = 'index.html';
+                    }
                 })
         },
         getDetail(res) {
@@ -80,6 +86,17 @@ new Vue({
                 .then(response => {
                     res.content = response.body.content
                 })
+        },
+        getPopularContent(res) {
+            let url = 'https://www.dcard.tw/_api/posts/' + res.id + '/comments?popular=true'
+            this.$http.get(url)
+                .then(response => {
+                    res.popular = response.body
+                })
+        },
+        getPopularImage(str) {
+            // http://stackoverflow.com/questions/34471610/regex-replace-url-with-image-tag
+            return str.match(/(https?:\/\/\S+(\.png|\.jpg|\.gif))/g)
         },
         getTimeAndSchool (item) {
             let date = new Date(item.createdAt)

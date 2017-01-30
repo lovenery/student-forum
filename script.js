@@ -1,3 +1,6 @@
+// https://meteor.today/boardlist/57e0afce41e832d5e53e5f97
+// https://meteor.today/article/get_' + this.mode + '_articles
+// https://meteor.today/article/get_basic_article_content, {articleId}
 new Vue({
     el: '#app',
     data: {
@@ -84,7 +87,6 @@ new Vue({
                 version: 2,
                 page: page
             }
-            // https://meteor.today/boardlist/57e0afce41e832d5e53e5f97
             let url = 'https://meteor.today/article/get_' + this.mode + '_articles'
             this.$http.post(url, data)
                 .then(response => {

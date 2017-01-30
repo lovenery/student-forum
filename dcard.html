@@ -29,12 +29,23 @@
             <a :href="'https://www.dcard.tw/f/sex/p/' + it.id" target="_blank">
                 <span class="title">{{ it.title }}</span>
             </a> <span>{{ getTimeAndSchool(it) }}</span>
-			<p>{{ it.content }}</p>
+			<!-- <p>{{ it.content }}</p> -->
 			<div v-for="media in it.media">
 				<div v-for="url in media">
 					<img :src="url" class="contentImg">
 				</div >
 			</div>
+            <div v-for="p in it.popular" v-if="p.gender=='F'">
+                <!-- <p>{{ p }}</p> -->
+                <div v-for="image in getPopularImage(p.content)">
+                    <p>
+                        <span v-if="p.host">原PO</span>
+                        <span v-else>非原PO</span>
+                        補圖的熱門回應
+                    </p>
+                    <img :src="image" class="contentImg">  
+                </div>
+            </div>
 			<hr>
 		</div>
 		<h1 v-if="loading">載入中。。。等等拉！</h1>
