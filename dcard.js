@@ -72,7 +72,7 @@ new Vue({
                     }
                     this.loading = false
                 }, (response) => {
-                    var r = confirm("https://dcard.tw失連。是：重新整理。否：回首頁。");
+                    var r = confirm("https://dcard.tw失連。你可以上他們的網站確認是不是掛了。取消：到另外一頁。確定：重新整理。");
                     if (r == true) {
                         location.reload();
                     } else {
