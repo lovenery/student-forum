@@ -96,8 +96,12 @@ new Vue({
                     }
                     this.loading = false
                 }, (response) => {
-                    alert("似乎有錯誤QQ, https://meteor.today失連, 也可能是不給爬資料了.")
-                    location.reload()
+                    var r = confirm("https://meteor.today失連。你可以上他們的網站確認是不是掛了(很常掛掉)。取消：到另外一頁。確定：重新整理。");
+                    if (r == true) {
+                        location.reload();
+                    } else {
+                        window.location.href = 'dcard.html';
+                    }
                 })
         },
         createTime (time) {
