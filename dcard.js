@@ -2,6 +2,7 @@
 // https://www.dcard.tw/_api/posts/225699806
 // https://www.dcard.tw/_api/posts/225699806/comments
 // https://www.dcard.tw/_api/posts/225704108/comments?popular=true
+Vue.prototype.$http = axios
 new Vue({
     el: '#app',
     data: {
@@ -61,7 +62,7 @@ new Vue({
             }
             this.$http.get(url)
                 .then(response => {
-                    let res = response.body
+                    let res = response.data
                     for (var i = 0, len = res.length; i < len; i++) {
                         // res[i].content = this.getDetail(res[i])
                         res[i].popular = this.getPopularContent(res[i])
@@ -84,14 +85,14 @@ new Vue({
             let url = 'https://www.dcard.tw/_api/posts/' + res.id
             this.$http.get(url)
                 .then(response => {
-                    res.content = response.body.content
+                    res.content = response.data.content
                 })
         },
         getPopularContent(res) {
             let url = 'https://www.dcard.tw/_api/posts/' + res.id + '/comments?popular=true'
             this.$http.get(url)
                 .then(response => {
-                    res.popular = response.body
+                    res.popular = response.data
                 })
         },
         getPopularImage(str) {

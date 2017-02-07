@@ -1,6 +1,7 @@
 // https://meteor.today/boardlist/57e0afce41e832d5e53e5f97
 // https://meteor.today/article/get_' + this.mode + '_articles
 // https://meteor.today/article/get_basic_article_content, {articleId}
+Vue.prototype.$http = axios // http://stackoverflow.com/questions/41879928/switching-from-vue-resource-to-axios
 new Vue({
     el: '#app',
     data: {
@@ -90,7 +91,7 @@ new Vue({
             let url = 'https://meteor.today/article/get_' + this.mode + '_articles'
             this.$http.post(url, data)
                 .then(response => {
-                    let res = JSON.parse(decodeURI(response.body.result))
+                    let res = JSON.parse(decodeURI(response.data.result))
                     for (var i = 0, len = res.length; i < len; i++) {
                         this.fullContent.push(res[i])
                     }
