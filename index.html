@@ -9,7 +9,7 @@
 </head>
 <body>
     <nav>
-        <a href="index.html" class="meteor">🔞 Meteor</a> ｜ 
+        <a href="index.html" class="meteor">👮 Meteor</a> ｜ 
         <a href="dcard.html" class="dcard">🔞 Dcard</a> ｜ 
         <a href="https://goo.gl/forms/nxPTGCqj0oVYVOB93" target="_blank">意見調查</a> ｜ 
         <span>Doesn't support IE, only show female's post. enjoy :)</span>
@@ -22,12 +22,14 @@
         <button @click="switchMode()" class="btn btn-green">Switch to {{ inverseMode }} Posts</button>
         <button @click="imageOnlyFlag = !imageOnlyFlag" class="btn btn-orange">{{ imageOnlyBtn }}</button>
         <hr>
+        <p>健康情慾似乎於2017/03/01關版，為大家提供 清純的 賣照板</p>
         <a href="https://goo.gl/psE6RB" target="_blank">千呼萬喚GoogleDrive-1476P-2017/01/28-12:00</a>
         <hr>
         <div v-for="i in fullContent" v-if="i.authorGender == 'female'" class="wrap">
             <a :href=" 'https://meteor.today/article/share/' + i.id " target="_blank">
                 <span class="title">{{ i.title }}</span>
-            </a> <span>{{ createTime(i.createdAt) + ' ' + i.authorSchoolName }}</span>
+            </a>
+            <span>{{ createTime(i.createdAt) + ' ' + i.authorSchoolName + ', ' + i.authorAlias }}</span>
             <p v-html="encodeToImg(i.content)"></p>
             <hr>
         </div>
