@@ -3,6 +3,7 @@
 // https://www.dcard.tw/_api/posts/225699806/comments
 // https://www.dcard.tw/_api/posts/225704108/comments?popular=true
 Vue.prototype.$http = axios
+axios.defaults.headers.common['access-control-allow-origin'] = '*'
 new Vue({
     el: '#app',
     data: {
