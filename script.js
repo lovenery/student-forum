@@ -84,7 +84,7 @@ new Vue({
         meteor (page) {
             this.loading = true
             let data = {
-                boardId: '57e0afce41e832d5e53e5f97',
+                boardId: '56fcf952299e4a3376892c1f',//'57e0afce41e832d5e53e5f97',
                 version: 2,
                 page: page
             }
