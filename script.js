@@ -61,7 +61,11 @@ new Vue({
             }
         },
         handleScroll () {
-            if(!this.loading && !this.EOF && $(window).scrollTop() + $(window).height() >= $(document).height() - 100 ) {
+            // $(window).scrollTop(), $(window).height(), $(document).height()
+            let window_scrollTop = document.body.scrollTop || window.pageYOffset;
+            const window_height = window.innerHeight || document.documentElement.clientHeight;
+            let body_height = document.body.scrollHeight || document.documentElement.scrollHeight;
+            if(!this.loading && !this.EOF && window_scrollTop + window_height >= body_height - 100 ) {
                 this.page++
                 this.meteor(this.page)
             }
