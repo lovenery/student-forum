@@ -19,11 +19,14 @@
     </nav>
     <div id="app" v-cloak>
         <h1>Meteor {{ theMode }} Posts</h1>
-        <button @click="switchMode()" class="btn btn-green">Switch to {{ inverseMode }} Posts</button>
+        <button @click="switchMode()" :disabled="loading" class="btn btn-green">Switch to {{ inverseMode }} Posts</button>
         <button @click="imageOnlyFlag = !imageOnlyFlag" class="btn btn-orange">{{ imageOnlyBtn }}</button>
         <hr>
-        <p>健康情慾似乎於2017/03/01關版，為大家提供 清純的 賣照板</p>
-        <a href="https://goo.gl/psE6RB" target="_blank">千呼萬喚GoogleDrive-1476P-2017/01/28-12:00</a>
+        <p>
+            健康情慾似乎於2017/03/01關版，為大家提供 清純的 賣照板。 |
+            <a href="https://goo.gl/UM33QL" target="_blank">Backup</a>
+        </p>
+        <!-- <a href="https://goo.gl/psE6RB" target="_blank">GoogleDrive-1476P-2017/01/28-12:00</a> -->
         <hr>
         <div v-for="i in fullContent" v-if="i.authorGender == 'female'" class="wrap">
             <a :href=" 'https://meteor.today/article/share/' + i.id " target="_blank">
@@ -34,12 +37,11 @@
             <hr>
         </div>
         <h1 v-if="loading">載入中。。。等等拉！</h1>
+        <h1 v-if="EOF">沒有文章囉！</h1>
     </div>
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.min.js"></script>
     <script src="script.js"></script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

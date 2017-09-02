@@ -20,7 +20,7 @@
     <div id="app" v-cloak>
         <h1>Dcard {{ thePopular }} Posts Image Only</h1>
         <!-- <p>{{ fullContent }}</p> -->
-        <button @click="switchPopular()" class="btn btn-green">Switch to {{ inversePopular }} Posts</button>
+        <button @click="switchPopular()" :disabled="loading" class="btn btn-green">Switch to {{ inversePopular }} Posts</button>
         <hr>
         <div v-for="it in fullContent" v-if="it.gender!='D' && it.gender!='M' ">
             <!-- <a :href="'https://www.dcard.tw/_api/posts/' + it.id">{{ it.title }}</a> -->
@@ -47,10 +47,10 @@
             <hr>
         </div>
         <h1 v-if="loading">載入中。。。等等拉！</h1>
+        <h1 v-if="EOF">沒有文章囉！</h1>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.min.js"></script>
     <script src="dcard.js"></script>
     <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

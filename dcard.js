@@ -11,6 +11,7 @@ new Vue({
         loading: false,
         before: '', // LAST ITEM
         popular: localStorage.getItem('popular') != null ? JSON.parse(localStorage.getItem('popular')) : true,
+        EOF: false,
     },
     mounted: function() {  
         window.addEventListener('scroll', this.handleScroll)
@@ -37,6 +38,7 @@ new Vue({
             this.fullContent = []
             this.before = ''
             this.dcard()
+            this.EOF = false
         },
         switchPopular () {
             if (this.popular) {
@@ -50,7 +52,11 @@ new Vue({
             }
         },
         handleScroll () {
-            if( $(window).scrollTop() + $(window).height() >= $(document).height() - 100 ) {
+            // $(window).scrollTop(), $(window).height(), $(document).height()
+            let window_scrollTop = document.body.scrollTop || window.pageYOffset;
+            const window_height = window.innerHeight || document.documentElement.clientHeight;
+            let body_height = document.body.scrollHeight || document.documentElement.scrollHeight;
+            if(!this.loading && !this.EOF && window_scrollTop + window_height >= body_height - 100 ) {
                 this.dcard()
             }
         },
@@ -64,6 +70,9 @@ new Vue({
             this.$http.get(url)
                 .then(response => {
                     let res = response.data
+                    if (res.length < 1) {
+                        this.EOF = true
+                    }
                     for (var i = 0, len = res.length; i < len; i++) {
                         // res[i].content = this.getDetail(res[i])
                         res[i].popular = this.getPopularContent(res[i])
@@ -74,11 +83,11 @@ new Vue({
                     }
                     this.loading = false
                 }, (response) => {
-                    var r = confirm("https://dcard.tw失連。你可以上他們的網站確認是不是掛了。取消：到另外一頁。確定：重新整理。");
+                    var r = confirm("好像有什麼地方出錯了，請過一段時間後重新整理。");
                     if (r == true) {
                         location.reload();
                     } else {
-                        window.location.href = 'index.html';
+                        // window.location.href = 'index.html';
                     }
                 })
         },
