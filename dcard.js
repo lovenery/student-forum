@@ -83,7 +83,7 @@ new Vue({
                     }
                     this.loading = false
                 }, (response) => {
-                    var r = confirm("好像有什麼地方出錯了，請重新整理。");
+                    var r = confirm("好像有什麼地方出錯了，請過一段時間後重新整理。");
                     if (r == true) {
                         location.reload();
                     } else {
