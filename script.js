@@ -1,16 +1,19 @@
 // https://meteor.today/boardlist/57e0afce41e832d5e53e5f97
 // https://meteor.today/article/get_' + this.mode + '_articles
 // https://meteor.today/article/get_basic_article_content, {articleId}
+// refs:
+// https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec
+// https://stackoverflow.com/questions/6323417/how-do-i-retrieve-all-matches-for-a-regular-expression-in-javascript
 Vue.prototype.$http = axios // http://stackoverflow.com/questions/41879928/switching-from-vue-resource-to-axios
 new Vue({
     el: '#app',
     data: {
         fullContent: [],
-        imageOnly: [],
         imageOnlyFlag: false,
-        page: 1,
+        page: 0,
         loading: false,
         mode: localStorage.getItem('mode') != null ? localStorage.getItem('mode') : 'hot',
+        EOF: false,
     },
     mounted: function() {  
         window.addEventListener('scroll', this.handleScroll)
@@ -42,9 +45,9 @@ new Vue({
     methods: {
         init () {
             this.fullContent = []
-            this.page = 1
-            this.meteor()
-            this.imageOnly = this.fullContent
+            this.page = 0
+            this.meteor(0)
+            this.EOF = false
         },
         switchMode () {
             if (this.mode == 'hot') {
@@ -58,26 +61,22 @@ new Vue({
             }
         },
         handleScroll () {
-            if( $(window).scrollTop() + $(window).height() >= $(document).height() - 100 ) {
+            if(!this.loading && !this.EOF && $(window).scrollTop() + $(window).height() >= $(document).height() - 100 ) {
                 this.page++
                 this.meteor(this.page)
             }
         },
         encodeToImg (content) {
             if (this.imageOnlyFlag && !content.includes('.jpg') && !content.includes('.png') ) {
-                return '可能撤照了QQ'
+                return '此文無相片'
             }
             let only = ''
-            for (let img_i = 1; img_i < content.split('http://i.imgur.com/').length; img_i++) {
-                let newHash = content.split('http://i.imgur.com/')[img_i].split('.jpg')[0]
-                let ext = '.jpg'
-                if (newHash.length > 9) {
-                    newHash = content.split('http://i.imgur.com/')[img_i].split('.png')[0]
-                    ext = '.png'
-                }
-                let url = 'http://i.imgur.com/' + newHash + ext
-                content = content.split(url)[0] + "<img class='contentImg' src='" + url + "'/>" + content.split(url)[1]
-                only += "<img class='contentImg' src='" + url + "'/>"
+            const imgur_pattern = /https?:\/\/(?:i\.)?imgur\.com\/\w+\.(?:jpg|png|gif)/g;
+            var matched;
+            while ((matched = imgur_pattern.exec(content)) !== null) {
+                img_tag = `<img class='contentImg' src='${matched[0]}'/>`
+                content = content.replace(matched[0], img_tag)
+                only += img_tag
             }
             return !this.imageOnlyFlag ? content : only
         },
@@ -92,6 +91,9 @@ new Vue({
             this.$http.post(url, data)
                 .then(response => {
                     let res = JSON.parse(decodeURI(response.data.result))
+                    if (res.length < 1) {
+                        this.EOF = true
+                    }
                     for (var i = 0, len = res.length; i < len; i++) {
                         this.fullContent.push(res[i])
                     }
