@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PTT Beauty</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/style.css">
+    <style>
+        .fa-spinner {
+            position: fixed;
+            top: calc(50% - 24px);
+            left: calc(50% - 30.85px);
+            color:orangered;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="meteor">👮 Meteor</a> ｜ 
+        <a href="dcard.html" class="dcard">🔞 Dcard</a> ｜ 
+        <a href="ptt.html" class="ptt">🇹🇼 PTT</a> ｜ 
+        <a href="https://goo.gl/forms/nxPTGCqj0oVYVOB93" target="_blank">Forms</a>
+        <span id="forkongithub">
+            <a href="https://github.com/lovenery/student-forum">Fork me on GitHub</a>
+        </span>
+    </nav>
+    
+    <main>
+        <h1>PTT Beauty</h1>
+        <div id="app">
+            
+        </div>
+        <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+        <span class="sr-only">Loading...</span>
+    </main>
+
+    <script src="assets/ptt.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-91016420-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+</body>
+</html>
