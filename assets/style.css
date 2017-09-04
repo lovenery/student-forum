@@ -72,6 +72,12 @@ a {
 .wrap {
     white-space: pre-wrap;
 }
+.fa-spinner {
+    position: fixed;
+    top: calc(50% - 24px);
+    left: calc(50% - 30.85px);
+    color:orangered;
+}
 
 /* https://codepo8.github.io/css-fork-on-github-ribbon/ */
 #forkongithub {
