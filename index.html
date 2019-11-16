@@ -25,12 +25,6 @@
         <button @click="switchMode()" :disabled="loading" class="btn btn-green">Switch to {{ inverseMode }} Posts</button>
         <button @click="imageOnlyFlag = !imageOnlyFlag" class="btn btn-orange">{{ imageOnlyBtn }}</button>
         <hr>
-        <p>
-            這裡是<mark>清純的</mark>賣照板。 |
-            <a href="https://goo.gl/UM33QL" target="_blank">Backup</a>
-        </p>
-        <!-- <a href="https://goo.gl/psE6RB" target="_blank">GoogleDrive-1476P-2017/01/28-12:00</a> -->
-        <hr>
         <div v-for="i in fullContent" v-if="i.authorGender == 'female'" class="wrap">
             <a :href=" 'https://meteor.today/article/share/' + i.id " target="_blank">
                 <span class="title">{{ i.title }}</span>
