@@ -1,4 +1,3 @@
-# Taiwan 🔞 Student Forum Client
+# Taiwan Student Forum Client
 
-## License
-MIT
+> A practice of front-end crawler

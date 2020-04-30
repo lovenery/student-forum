@@ -4,6 +4,12 @@
 // https://www.dcard.tw/_api/posts/225704108/comments?popular=true
 Vue.prototype.$http = axios
 axios.defaults.headers.common['access-control-allow-origin'] = '*'
+
+// Be careful the buildFullPath(baseURL, url) escape slashes
+// https://github.com/axios/axios/blob/6fe506fda290ba935c2641f68f1fcba7f4a16cd3/lib/adapters/xhr.js#L29
+let cors = 'https://cors-anywhere.herokuapp.com/'
+axios.defaults.baseURL = `${cors}https://www.dcard.tw`
+
 new Vue({
     el: '#app',
     data: {
@@ -12,6 +18,8 @@ new Vue({
         before: '', // LAST ITEM
         popular: localStorage.getItem('popular') != null ? JSON.parse(localStorage.getItem('popular')) : true,
         EOF: false,
+        rateLimitTimer: 500,
+        rateLimitTimeSlot: 500 // 100 is okay
     },
     mounted: function() {  
         window.addEventListener('scroll', this.handleScroll)
@@ -62,7 +70,7 @@ new Vue({
         },
         dcard () {
             this.loading = true
-            let url = 'https://www.dcard.tw/_api/forums/sex/posts?popular=' + this.popular
+            let url = '/_api/forums/sex/posts?popular=' + this.popular
             if (this.before) {
                 let before = this.before
                 url += '&before=' + before
@@ -92,18 +100,28 @@ new Vue({
                 })
         },
         getDetail(res) {
-            let url = 'https://www.dcard.tw/_api/posts/' + res.id
+            let url = '/_api/posts/' + res.id
             this.$http.get(url)
                 .then(response => {
                     res.content = response.data.content
                 })
         },
         getPopularContent(res) {
-            let url = 'https://www.dcard.tw/_api/posts/' + res.id + '/comments?popular=true'
-            this.$http.get(url)
-                .then(response => {
-                    res.popular = response.data
-                })
+            let url = '/_api/posts/' + res.id + '/comments?popular=true'
+
+            /**
+             * rate limiter for preventing throttle
+             */
+            var that = this; // https://stackoverflow.com/questions/2130241/pass-correct-this-context-to-settimeout-callback
+            that.rateLimitTimer += that.rateLimitTimeSlot
+            console.log(`wait ${that.rateLimitTimer/1000}s for ${url}`)
+            setTimeout(function () {
+                that.$http.get(url)
+                    .then(response => {
+                        res.popular = response.data
+                        that.rateLimitTimer -= that.rateLimitTimeSlot
+                    })
+            }, that.rateLimitTimer)
         },
         getPopularImage(str) {
             // http://stackoverflow.com/questions/34471610/regex-replace-url-with-image-tag
